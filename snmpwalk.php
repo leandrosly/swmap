@@ -62,11 +62,13 @@
 			echo count($walk) . " endereços\n\n";
 			if ($_GET["ord"]) asort($walk, SORT_NATURAL);
 			foreach ($walk as $oid => $value) {
-				$mac = preg_replace("/iso.3.6.1.2.1.17.7.1.2.2.1.2.1./","",$oid);
+				$mac = preg_replace("/iso.3.6.1.2.1.17.7.1.2.2.1.2.([\d]+)./","\\1;",$oid);
+				$vlan = explode(";",$mac)[0];
+				$mac = explode(";",$mac)[1];
 				$machex = mac_dechex($mac);
 				if ($_GET["onlyswitches"] != true || in_array($machex,$switches)) {
 					$marca = $_GET["marcas"] ? $marcas[substr($machex, 0, 8)] : "";
-					echo "<spam name=\"$machex\" onclick=\"marcar('$machex')\">$machex</spam> - " . str_pad(substr($value, 9), 2, " ", STR_PAD_LEFT) . " " . $marca . "\n";
+					echo str_pad($vlan, 3, " ", STR_PAD_LEFT) . "  <spam name=\"$machex\" onclick=\"marcar('$machex')\">$machex</spam> - " . str_pad(substr($value, 9), 2, " ", STR_PAD_LEFT) . " " . $marca . "\n";
 				}
 			}
 		} else {
