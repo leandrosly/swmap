@@ -9,6 +9,9 @@
 			document.getElementsByName(mac)[i].style.backgroundColor = '#FF8888';
 		}
 	}
+	function chgqry() {
+		window.history.replaceState( {} , 'foo', '/foo' );
+	}
 </script>
 </head>
 <body>
@@ -51,6 +54,8 @@
 	#echo "<pre>\n";
 	#print_r($switches);
 	#echo "</pre>\n";
+
+	echo "<spam  onclick=\"chgqry()\">teste</spam>";
 
 	echo "<table><tr>\n";
 	foreach($switches as $ip=>$swmac) {
